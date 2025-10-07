@@ -48,8 +48,10 @@ const taskSchema = z.object({
     .max(500, "Description can be up to 500 characters.")
     .optional()
     .or(z.literal("")),
-  expectedDuration: z.coerce.number({
-      invalid_type_error: "Enter the expected duration in minutes.",
+  expectedDuration: z.coerce
+    .number()
+    .refine((value) => !Number.isNaN(value), {
+      message: "Enter the expected duration in minutes.",
     })
     .refine((value) => value >= 15 && value <= 1440, {
       message: "Expected duration should be between 15 and 1440 minutes.",
