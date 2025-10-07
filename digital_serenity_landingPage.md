@@ -10,6 +10,7 @@ If it doesn't, provide instructions on how to setup project via shadcn CLI, inst
 Determine the default path for components and styles. 
 If default path for components is not /components/ui, provide instructions on why it's important to create this folder
 Copy-paste this component to /components/ui folder:
+{% raw %}
 ```tsx
 digital-serenity-animated-landing-page.tsx
 import React, { useState, useEffect, useRef } from 'react';
@@ -267,7 +268,7 @@ const DemoOne = () => {
 export { DemoOne };
 
 ```
-
+{% endraw %}
 Implementation Guidelines
  1. Analyze the component structure and identify all required dependencies
  2. Review the component's argumens and state
