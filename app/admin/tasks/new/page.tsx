@@ -48,14 +48,16 @@ const taskSchema = z.object({
     .max(500, "Description can be up to 500 characters.")
     .optional()
     .or(z.literal("")),
-  expectedDuration: z.coerce
-    .number()
-    .refine((value) => !Number.isNaN(value), {
-      message: "Enter the expected duration in minutes.",
-    })
-    .refine((value) => value >= 15 && value <= 1440, {
-      message: "Expected duration should be between 15 and 1440 minutes.",
-    }),
+  expectedDuration: z
+    .string()
+    .refine((value) => {
+      const numeric = Number(value);
+      return Number.isFinite(numeric);
+    }, "Enter the expected duration in minutes.")
+    .refine((value) => {
+      const numeric = Number(value);
+      return numeric >= 15 && numeric <= 1440;
+    }, "Expected duration should be between 15 and 1440 minutes."),
   projects: z
     .array(z.string())
     .min(1, "Select at least one project to associate this task."),
@@ -142,7 +144,7 @@ export default function AdminCreateTaskPage() {
     defaultValues: {
       title: "",
       description: "",
-      expectedDuration: 60,
+      expectedDuration: "60",
       projects: [],
       workers: [],
       isFollowUp: false,
